@@ -1,5 +1,4 @@
-#! /usr/bin/env nix-shell
-#! nix-shell -i python3 -p "python3.withPackages(ps: [ps.django_2_1 ps.psycopg2])"
+#! /usr/bin/env python
 
 import os
 import sys
