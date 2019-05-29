@@ -4,10 +4,11 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
-from insurance.models import Risk
+from insurance.models import Risk, RiskType
 from insurance.permissions import UserIsOwnerRisk
-from insurance.serializers import UserSerializer, GroupSerializer, RiskSerializer
+from insurance.serializers import UserSerializer, GroupSerializer, RiskSerializer, RiskTypeSerializer
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -33,17 +34,11 @@ class RiskViewSet(viewsets.ModelViewSet):
     queryset = Risk.objects.all()
     serializer_class = RiskSerializer
 
-class RiskCreateAPIView(ListCreateAPIView):
-    serializer_class = RiskSerializer
+class RiskTypeViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows risks to be viewed or edited.
+    """
+    queryset = RiskType.objects.all()
+    serializer_class = RiskTypeSerializer
 
-    def get_queryset(self):
-        return Risk.objects.filter(user=self.request.user)
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
-class RiskDetailAPIView(RetrieveUpdateDestroyAPIView):
-    serializer_class = RiskSerializer
-    queryset = Risk.objects.all()
-    permission_classes = (IsAuthenticated, UserIsOwnerRisk)
 

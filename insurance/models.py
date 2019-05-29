@@ -6,6 +6,10 @@ from django.contrib.auth.models import User
 # Create your models here.
 class RiskType(models.Model):
     name = models.CharField(max_length=255)
+    created_by = models.ForeignKey(
+        User, on_delete=models.SET_NULL,
+        null=True
+    )
     attribute_collection = JSONField()
 
 
