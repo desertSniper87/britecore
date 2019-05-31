@@ -32,3 +32,6 @@ class RiskTypeSerializer(serializers.HyperlinkedModelSerializer):
         created_by = self.context['request'].user
         validated_data['created_by'] = created_by
         return super(RiskTypeSerializer, self).create(validated_data)
+
+    def update(self, instance, validated_data):
+        return super(RiskTypeSerializer, self).update(instance, validated_data)
