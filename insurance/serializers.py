@@ -24,7 +24,11 @@ class RiskSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class RiskTypeSerializer(serializers.HyperlinkedModelSerializer):
-    created_by = UserSerializer(read_only=True)
     class Meta:
         model = RiskType
         fields = ('name', 'created_by', 'attribute_collection')
+
+    def create(self, validated_data):
+        created_by = self.context['request'].user
+        validated_data['created_by'] = created_by
+        return super(RiskTypeSerializer, self).create(validated_data)
