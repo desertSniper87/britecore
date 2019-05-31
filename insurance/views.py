@@ -1,13 +1,7 @@
-from django.shortcuts import render
-
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
 
 from insurance.models import Risk, RiskType
-from insurance.permissions import UserIsOwnerRisk
 from insurance.serializers import UserSerializer, GroupSerializer, RiskSerializer, RiskTypeSerializer
 
 
