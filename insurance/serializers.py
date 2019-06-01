@@ -17,10 +17,17 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class RiskSerializer(serializers.HyperlinkedModelSerializer):
-    user = UserSerializer(read_only=True)
     class Meta:
         model = Risk
-        fields = ('user', 'name', 'date_created', 'risk_type')
+        fields = ('name', 'date_created', 'risk_type', 'risk_attributes')
+
+    def create(self, validated_data):
+        user = self.context['request'].user
+        validated_data['user'] = user
+        return super(RiskSerializer, self).create(validated_data)
+
+    def update(self, instance, validated_data):
+        return super(RiskSerializer, self).update(instance, validated_data)
 
 
 class RiskTypeSerializer(serializers.HyperlinkedModelSerializer):
